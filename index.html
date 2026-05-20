@@ -1,0 +1,1707 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WalkTrail - Connect, Walk, Motivate</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Outfit:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #2D5A27;
+            --secondary: #F4A261;
+            --accent: #E76F51;
+            --background: #FEFAE0;
+            --card-bg: #FFFFFF;
+            --text-primary: #1A1A1A;
+            --text-secondary: #5C5C5C;
+            --success: #40916C;
+            --border: #D4D4D4;
+            --shadow: 0 4px 20px rgba(45, 90, 39, 0.08);
+            --shadow-hover: 0 8px 30px rgba(45, 90, 39, 0.15);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--background);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        /* Navigation */
+        .navbar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            padding: 16px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: var(--shadow);
+            z-index: 1000;
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-family: 'Outfit', sans-serif;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, var(--primary), var(--success));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-secondary);
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .nav-links a.active::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--secondary);
+            border-radius: 2px;
+        }
+
+        .nav-user {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding-top: 80px;
+            min-height: 100vh;
+        }
+
+        /* Hero Section */
+        .hero {
+            padding: 48px 32px;
+            background: linear-gradient(135deg, rgba(45, 90, 39, 0.1), rgba(64, 145, 108, 0.05));
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 24px;
+            animation: fadeIn 0.6s ease 0.2s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: var(--primary);
+        }
+
+        .hero-content p {
+            font-size: 1.1rem;
+            color: var(--text-secondary);
+            margin-bottom: 24px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #234a1f;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-secondary {
+            background: var(--card-bg);
+            color: var(--primary);
+            border: 2px solid var(--primary);
+        }
+
+        .btn-secondary:hover {
+            background: var(--primary);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 32px;
+            animation: fadeIn 0.6s ease 0.4s both;
+        }
+
+        .stat-box {
+            text-align: center;
+            padding: 20px 28px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+        }
+
+        .stat-number {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 48px 32px;
+        }
+
+        /* Section Headers */
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .section-header h2 {
+            font-size: 1.75rem;
+            color: var(--primary);
+        }
+
+        .view-all {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .view-all:hover {
+            color: var(--accent);
+        }
+
+        /* Dashboard Grid */
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-bottom: 48px;
+            animation: fadeIn 0.6s ease 0.6s both;
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            color: var(--text-primary);
+        }
+
+        /* Stats Card */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 16px;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 16px;
+            background: var(--background);
+            border-radius: 8px;
+        }
+
+        .stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-text {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Streak Card */
+        .streak-display {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            padding: 20px;
+        }
+
+        .streak-icon {
+            font-size: 3rem;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+        }
+
+        .streak-info h3 {
+            font-size: 2.5rem;
+            color: var(--secondary);
+        }
+
+        .streak-info p {
+            color: var(--text-secondary);
+        }
+
+        /* Buddy Cards */
+        .buddies-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .buddy-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            animation: fadeIn 0.6s ease both;
+        }
+
+        .buddy-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .buddy-avatar {
+            position: relative;
+            margin-bottom: 16px;
+        }
+
+        .buddy-avatar img {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--success);
+        }
+
+        .online-indicator {
+            position: absolute;
+            bottom: 4px;
+            right: 4px;
+            width: 16px;
+            height: 16px;
+            background: var(--success);
+            border: 3px solid var(--card-bg);
+            border-radius: 50%;
+        }
+
+        .buddy-name {
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 4px;
+        }
+
+        .buddy-location {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            margin-bottom: 12px;
+        }
+
+        .buddy-tags {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 16px;
+        }
+
+        .tag {
+            padding: 4px 12px;
+            background: var(--background);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .buddy-actions {
+            display: flex;
+            gap: 12px;
+            width: 100%;
+            margin-top: auto;
+        }
+
+        .buddy-actions .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 10px 16px;
+            font-size: 0.875rem;
+        }
+
+        /* Challenge Cards */
+        .challenges-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .challenge-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .challenge-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .challenge-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .challenge-title {
+            font-size: 1.25rem;
+            margin-bottom: 8px;
+        }
+
+        .challenge-desc {
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+            margin-bottom: 16px;
+        }
+
+        .challenge-progress {
+            margin-bottom: 16px;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 8px;
+            background: var(--background);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--success));
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .challenge-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 16px;
+            border-top: 1px solid var(--border);
+        }
+
+        .participants {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .days-left {
+            padding: 4px 12px;
+            background: rgba(231, 111, 81, 0.1);
+            color: var(--accent);
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        /* Activity Feed */
+        .activity-feed {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+        }
+
+        .activity-card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: var(--shadow);
+            transition: all 0.3s ease;
+        }
+
+        .activity-card:hover {
+            transform: translateX(4px);
+        }
+
+        .activity-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .activity-avatar {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 600;
+        }
+
+        .activity-user {
+            font-weight: 600;
+        }
+
+        .activity-time {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-details {
+            display: flex;
+            gap: 24px;
+            margin-bottom: 16px;
+            flex-wrap: wrap;
+        }
+
+        .activity-stat {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .activity-stat-icon {
+            width: 36px;
+            height: 36px;
+            background: var(--background);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .activity-stat-value {
+            font-weight: 600;
+        }
+
+        .activity-stat-label {
+            font-size: 0.75rem;
+            color: var(--text-secondary);
+        }
+
+        .activity-actions {
+            display: flex;
+            gap: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+
+        .activity-action {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: color 0.3s ease;
+            background: none;
+            border: none;
+            font-family: inherit;
+            font-size: 0.9rem;
+        }
+
+        .activity-action:hover {
+            color: var(--primary);
+        }
+
+        .activity-action.liked {
+            color: var(--accent);
+        }
+
+        /* Motivational Quotes */
+        .quote-section {
+            background: linear-gradient(135deg, var(--primary), var(--success));
+            border-radius: 16px;
+            padding: 32px;
+            color: white;
+            text-align: center;
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeIn 0.6s ease 0.8s both;
+        }
+
+        .quote-section::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 20px;
+            font-size: 150px;
+            opacity: 0.1;
+            font-family: Georgia, serif;
+        }
+
+        .quote-text {
+            font-size: 1.5rem;
+            font-style: italic;
+            margin-bottom: 16px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .quote-author {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal {
+            background: var(--card-bg);
+            border-radius: 16px;
+            padding: 32px;
+            max-width: 500px;
+            width: 90%;
+            transform: scale(0.9);
+            transition: transform 0.3s ease;
+        }
+
+        .modal-overlay.active .modal {
+            transform: scale(1);
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .modal-close {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--background);
+            border: none;
+            cursor: pointer;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .modal-close:hover {
+            background: var(--accent);
+            color: white;
+        }
+
+        /* Walk Session */
+        .walk-timer {
+            font-family: 'Outfit', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-align: center;
+            margin: 24px 0;
+        }
+
+        .walk-stats {
+            display: flex;
+            justify-content: center;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+
+        .walk-stat {
+            text-align: center;
+        }
+
+        .walk-stat-value {
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+
+        .walk-stat-label {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        .walk-controls {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+        }
+
+        .walk-controls .btn {
+            min-width: 120px;
+            justify-content: center;
+        }
+
+        /* Toast Notifications */
+        .toast-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            z-index: 3000;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .toast {
+            background: var(--card-bg);
+            padding: 16px 24px;
+            border-radius: 8px;
+            box-shadow: var(--shadow-hover);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            animation: slideIn 0.3s ease;
+            border-left: 4px solid var(--success);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        .toast.error {
+            border-left-color: var(--accent);
+        }
+
+        .toast.success {
+            border-left-color: var(--success);
+        }
+
+        /* Views */
+        .view {
+            display: none;
+        }
+
+        .view.active {
+            display: block;
+        }
+
+        /* Mobile Menu */
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 12px 16px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .hero {
+                padding: 32px 16px;
+            }
+
+            .hero-content h1 {
+                font-size: 1.75rem;
+            }
+
+            .hero-stats {
+                width: 100%;
+                justify-content: space-between;
+            }
+
+            .stat-box {
+                padding: 16px;
+            }
+
+            .container {
+                padding: 32px 16px;
+            }
+
+            .quote-text {
+                font-size: 1.2rem;
+            }
+
+            .walk-timer {
+                font-size: 3rem;
+            }
+
+            .walk-stats {
+                gap: 16px;
+            }
+        }
+
+        /* Achievement Badge */
+        .achievement-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 12px;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        /* Filter Tabs */
+        .filter-tabs {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 8px 20px;
+            background: var(--card-bg);
+            border: 2px solid var(--border);
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: inherit;
+            font-weight: 500;
+        }
+
+        .filter-tab:hover,
+        .filter-tab.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: white;
+        }
+
+        /* Loading */
+        .loading {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+        }
+
+        .spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid var(--border);
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <a href="#" class="logo" onclick="showView('home')">
+            <div class="logo-icon">🚶</div>
+            WalkTrail
+        </a>
+        <ul class="nav-links">
+            <li><a href="#" class="active" data-view="home" onclick="showView('home')">Home</a></li>
+            <li><a href="#" data-view="buddies" onclick="showView('buddies')">Find Buddies</a></li>
+            <li><a href="#" data-view="challenges" onclick="showView('challenges')">Challenges</a></li>
+            <li><a href="#" data-view="activity" onclick="showView('activity')">My Walks</a></li>
+        </ul>
+        <div class="nav-user">
+            <div class="user-avatar">JD</div>
+        </div>
+        <button class="mobile-menu-btn">☰</button>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <!-- Home View -->
+        <div class="view active" id="view-home">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h1 id="greeting">Good Morning, John! 👋</h1>
+                    <p>Ready to walk with friends today? Let's make it happen!</p>
+                    <div class="cta-buttons">
+                        <button class="btn btn-primary" onclick="openWalkModal()">
+                            🚶 Start Walking
+                        </button>
+                        <button class="btn btn-secondary" onclick="showView('buddies')">
+                            👥 Find Buddies
+                        </button>
+                    </div>
+                </div>
+                <div class="hero-stats">
+                    <div class="stat-box">
+                        <div class="stat-number">7</div>
+                        <div class="stat-label">Day Streak 🔥</div>
+                    </div>
+                    <div class="stat-box">
+                        <div class="stat-number">12</div>
+                        <div class="stat-label">Friends Active</div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="container">
+                <!-- Motivational Quote -->
+                <div class="quote-section">
+                    <p class="quote-text" id="quote-text">"The only bad walk is the one that didn't happen."</p>
+                    <p class="quote-author">- Unknown</p>
+                </div>
+
+                <!-- Dashboard Grid -->
+                <div class="section-header">
+                    <h2>Your Progress</h2>
+                </div>
+                <div class="dashboard-grid">
+                    <!-- Stats Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">📊 This Week</h3>
+                        </div>
+                        <div class="stats-grid">
+                            <div class="stat-item">
+                                <div class="stat-value">24.5</div>
+                                <div class="stat-text">km walked</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">4h 20m</div>
+                                <div class="stat-text">total time</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">5</div>
+                                <div class="stat-text">walks</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">1,240</div>
+                                <div class="stat-text">calories</div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Streak Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">🔥 Your Streak</h3>
+                        </div>
+                        <div class="streak-display">
+                            <div class="streak-icon">🔥</div>
+                            <div class="streak-info">
+                                <h3>7 Days</h3>
+                                <p>Keep it up! You're on fire!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Actions Card -->
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">⚡ Quick Actions</h3>
+                        </div>
+                        <div style="display: flex; flex-direction: column; gap: 12px;">
+                            <button class="btn btn-primary" onclick="openWalkModal()">
+                                🚶 Start Walk Session
+                            </button>
+                            <button class="btn btn-secondary" onclick="showView('buddies')">
+                                👥 Invite Buddy
+                            </button>
+                            <button class="btn btn-secondary" onclick="showView('challenges')">
+                                🏆 Join Challenge
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Recent Activity -->
+                <div class="section-header">
+                    <h2>Recent Activity</h2>
+                    <a href="#" class="view-all" onclick="showView('activity')">View All →</a>
+                </div>
+                <div class="activity-feed" id="recent-activity">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Find Buddies View -->
+        <div class="view" id="view-buddies">
+            <div class="container">
+                <div class="section-header">
+                    <h2>🚶 Find Walking Buddies</h2>
+                </div>
+
+                <div class="filter-tabs">
+                    <button class="filter-tab active">All</button>
+                    <button class="filter-tab">Near You</button>
+                    <button class="filter-tab">Morning</button>
+                    <button class="filter-tab">Evening</button>
+                    <button class="filter-tab">Same Pace</button>
+                </div>
+
+                <div class="buddies-grid" id="buddies-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- Challenges View -->
+        <div class="view" id="view-challenges">
+            <div class="container">
+                <div class="section-header">
+                    <h2>🏆 Active Challenges</h2>
+                </div>
+
+                <div class="challenges-grid" id="challenges-grid">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+
+        <!-- My Walks View -->
+        <div class="view" id="view-activity">
+            <div class="container">
+                <div class="section-header">
+                    <h2>📈 My Walk History</h2>
+                </div>
+
+                <div class="activity-feed" id="full-activity-feed">
+                    <!-- Populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Walk Session Modal -->
+    <div class="modal-overlay" id="walk-modal">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">🚶 Walk Session</h3>
+                <button class="modal-close" onclick="closeWalkModal()">×</button>
+            </div>
+            <div class="walk-timer" id="walk-timer">00:00:00</div>
+            <div class="walk-stats">
+                <div class="walk-stat">
+                    <div class="walk-stat-value" id="walk-distance">0.0</div>
+                    <div class="walk-stat-label">km</div>
+                </div>
+                <div class="walk-stat">
+                    <div class="walk-stat-value" id="walk-calories">0</div>
+                    <div class="walk-stat-label">calories</div>
+                </div>
+            </div>
+            <div class="walk-controls">
+                <button class="btn btn-primary" id="start-btn" onclick="startWalk()">▶ Start</button>
+                <button class="btn btn-secondary" id="pause-btn" onclick="pauseWalk()" style="display: none;">⏸ Pause</button>
+                <button class="btn btn-primary" id="finish-btn" onclick="finishWalk()" style="display: none;">✓ Finish</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div class="toast-container" id="toast-container"></div>
+
+    <script>
+        // Sample Data
+        const buddies = [
+            {
+                id: 1,
+                name: "Sarah Mitchell",
+                location: "2.3 km away",
+                avatar: "SM",
+                online: true,
+                tags: ["Morning Walker", "5km pace", "Weekends"],
+                connected: false
+            },
+            {
+                id: 2,
+                name: "Mike Johnson",
+                location: "1.5 km away",
+                avatar: "MJ",
+                online: true,
+                tags: ["Evening Walker", "3km pace", "Daily"],
+                connected: false
+            },
+            {
+                id: 3,
+                name: "Emma Davis",
+                location: "3.1 km away",
+                avatar: "ED",
+                online: false,
+                tags: ["Morning Jogger", "6km pace", "Weekdays"],
+                connected: true
+            },
+            {
+                id: 4,
+                name: "Alex Chen",
+                location: "4.2 km away",
+                avatar: "AC",
+                online: true,
+                tags: ["Evening Walker", "4km pace", "Flexible"],
+                connected: false
+            },
+            {
+                id: 5,
+                name: "Lisa Anderson",
+                location: "2.8 km away",
+                avatar: "LA",
+                online: true,
+                tags: ["Morning Walker", "4km pace", "Daily"],
+                connected: false
+            },
+            {
+                id: 6,
+                name: "James Wilson",
+                location: "1.9 km away",
+                avatar: "JW",
+                online: false,
+                tags: ["Evening Jogger", "7km pace", "Weekdays"],
+                connected: true
+            }
+        ];
+
+        const challenges = [
+            {
+                id: 1,
+                icon: "🏃",
+                title: "February Fitness",
+                description: "Walk 50km this month to complete the challenge",
+                progress: 65,
+                current: 32.5,
+                target: 50,
+                participants: 234,
+                daysLeft: 13,
+                joined: true
+            },
+            {
+                id: 2,
+                icon: "👥",
+                title: "Buddy Challenge",
+                description: "Complete 10 walks with your buddies",
+                progress: 40,
+                current: 4,
+                target: 10,
+                participants: 156,
+                daysLeft: 20,
+                joined: false
+            },
+            {
+                id: 3,
+                icon: "🔥",
+                title: "Streak Master",
+                description: "Maintain a 14-day walking streak",
+                progress: 50,
+                current: 7,
+                target: 14,
+                participants: 412,
+                daysLeft: 7,
+                joined: true
+            },
+            {
+                id: 4,
+                icon: "🌅",
+                title: "Early Bird",
+                description: "Complete 20 morning walks before 8am",
+                progress: 30,
+                current: 6,
+                target: 20,
+                participants: 189,
+                daysLeft: 25,
+                joined: false
+            },
+            {
+                id: 5,
+                icon: "⛰️",
+                title: "Mountain Explorer",
+                description: "Climb the equivalent of 5000m in elevation",
+                progress: 78,
+                current: 3900,
+                target: 5000,
+                participants: 98,
+                daysLeft: 18,
+                joined: true
+            }
+        ];
+
+        const activities = [
+            {
+                id: 1,
+                user: "Sarah Mitchell",
+                avatar: "SM",
+                time: "2 hours ago",
+                distance: 5.2,
+                duration: "52:30",
+                pace: "10:05",
+                likes: 12,
+                comments: 3,
+                liked: false
+            },
+            {
+                id: 2,
+                user: "You",
+                avatar: "JD",
+                time: "Yesterday at 6:30 PM",
+                distance: 3.8,
+                duration: "38:15",
+                pace: "10:04",
+                likes: 8,
+                comments: 2,
+                liked: true
+            },
+            {
+                id: 3,
+                user: "Mike Johnson",
+                avatar: "MJ",
+                time: "Yesterday at 8:00 AM",
+                distance: 4.5,
+                duration: "45:00",
+                pace: "10:00",
+                likes: 15,
+                comments: 5,
+                liked: false
+            },
+            {
+                id: 4,
+                user: "Emma Davis",
+                avatar: "ED",
+                time: "2 days ago",
+                distance: 6.1,
+                duration: "58:20",
+                pace: "9:34",
+                likes: 22,
+                comments: 7,
+                liked: true
+            },
+            {
+                id: 5,
+                user: "You",
+                avatar: "JD",
+                time: "3 days ago",
+                distance: 2.5,
+                duration: "25:00",
+                pace: "10:00",
+                likes: 5,
+                comments: 1,
+                liked: false
+            }
+        ];
+
+        const quotes = [
+            { text: "The only bad walk is the one that didn't happen.", author: "Unknown" },
+            { text: "Walking is man's best medicine.", author: "Hippocrates" },
+            { text: "All truly great thoughts are conceived while walking.", author: "Friedrich Nietzsche" },
+            { text: "In every walk with nature, one receives far more than he seeks.", author: "John Muir" },
+            { text: "Walking is the perfect way to get from here to there.", author: "Megan McKinney" }
+        ];
+
+        // Walk Session State
+        let walkInterval = null;
+        let walkSeconds = 0;
+        let walkDistance = 0;
+        let walkCalories = 0;
+        let isWalking = false;
+        let isPaused = false;
+
+        // Initialize App
+        document.addEventListener('DOMContentLoaded', () => {
+            updateGreeting();
+            renderQuotes();
+            renderBuddies();
+            renderChallenges();
+            renderActivities();
+        });
+
+        // Update Greeting based on time
+        function updateGreeting() {
+            const hour = new Date().getHours();
+            let greeting = "Good Morning";
+            if (hour >= 12 && hour < 17) greeting = "Good Afternoon";
+            else if (hour >= 17) greeting = "Good Evening";
+            document.getElementById('greeting').textContent = `${greeting}, John! 👋`;
+        }
+
+        // Render Random Quote
+        function renderQuotes() {
+            const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+            document.getElementById('quote-text').textContent = `"${randomQuote.text}"`;
+            document.querySelector('.quote-author').textContent = `- ${randomQuote.author}`;
+        }
+
+        // Render Buddies
+        function renderBuddies() {
+            const grid = document.getElementById('buddies-grid');
+            grid.innerHTML = buddies.map(buddy => `
+                <div class="buddy-card" style="animation-delay: ${buddy.id * 0.1}s">
+                    <div class="buddy-avatar">
+                        <div class="buddy-avatar" style="width: 80px; height: 80px; border-radius: 50%; background: linear-gradient(135deg, var(--secondary), var(--accent)); display: flex; align-items: center; justify-content: center; color: white; font-weight: 600; font-size: 1.5rem;">
+                            ${buddy.avatar}
+                        </div>
+                        ${buddy.online ? '<div class="online-indicator"></div>' : ''}
+                    </div>
+                    <h3 class="buddy-name">${buddy.name}</h3>
+                    <p class="buddy-location">📍 ${buddy.location}</p>
+                    <div class="buddy-tags">
+                        ${buddy.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+                    </div>
+                    <div class="buddy-actions">
+                        ${buddy.connected 
+                            ? `<button class="btn btn-primary" onclick="inviteToWalk('${buddy.name}')">Invite to Walk</button>`
+                            : `<button class="btn btn-primary" onclick="connectBuddy(${buddy.id})">Connect</button>
+                               <button class="btn btn-secondary" onclick="inviteToWalk('${buddy.name}')">Invite</button>`
+                        }
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Challenges
+        function renderChallenges() {
+            const grid = document.getElementById('challenges-grid');
+            grid.innerHTML = challenges.map(challenge => `
+                <div class="challenge-card">
+                    <div class="challenge-icon">${challenge.icon}</div>
+                    <h3 class="challenge-title">${challenge.title}</h3>
+                    <p class="challenge-desc">${challenge.description}</p>
+                    <div class="challenge-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: ${challenge.progress}%"></div>
+                        </div>
+                        <div class="progress-text">
+                            <span>${challenge.current} / ${challenge.target}</span>
+                            <span>${challenge.progress}%</span>
+                        </div>
+                    </div>
+                    <div class="challenge-meta">
+                        <div class="participants">
+                            👥 ${challenge.participants} joined
+                        </div>
+                        <span class="days-left">${challenge.daysLeft} days left</span>
+                    </div>
+                    <div style="margin-top: 16px;">
+                        ${challenge.joined 
+                            ? `<button class="btn btn-primary" style="width: 100%;" onclick="showToast('You\\'re already in this challenge!', 'success')">View Progress</button>`
+                            : `<button class="btn btn-primary" style="width: 100%;" onclick="joinChallenge(${challenge.id})">Join Challenge</button>`
+                        }
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Render Activities
+        function renderActivities() {
+            const recentContainer = document.getElementById('recent-activity');
+            const fullContainer = document.getElementById('full-activity-feed');
+            
+            const activityHTML = activities.map(activity => `
+                <div class="activity-card">
+                    <div class="activity-header">
+                        <div class="activity-avatar">${activity.avatar}</div>
+                        <div>
+                            <div class="activity-user">${activity.user}</div>
+                            <div class="activity-time">${activity.time}</div>
+                        </div>
+                    </div>
+                    <div class="activity-details">
+                        <div class="activity-stat">
+                            <div class="activity-stat-icon">📏</div>
+                            <div>
+                                <div class="activity-stat-value">${activity.distance} km</div>
+                                <div class="activity-stat-label">Distance</div>
+                            </div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-icon">⏱️</div>
+                            <div>
+                                <div class="activity-stat-value">${activity.duration}</div>
+                                <div class="activity-stat-label">Duration</div>
+                            </div>
+                        </div>
+                        <div class="activity-stat">
+                            <div class="activity-stat-icon">⚡</div>
+                            <div>
+                                <div class="activity-stat-value">${activity.pace}</div>
+                                <div class="activity-stat-label">Pace/km</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="activity-actions">
+                        <button class="activity-action ${activity.liked ? 'liked' : ''}" onclick="likeActivity(${activity.id})">
+                            ${activity.liked ? '❤️' : '🤍'} ${activity.likes}
+                        </button>
+                        <button class="activity-action" onclick="showToast('Comments coming soon!', 'success')">
+                            💬 ${activity.comments}
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            recentContainer.innerHTML = activityHTML;
+            fullContainer.innerHTML = activityHTML;
+        }
+
+        // Navigation
+        function showView(viewName) {
+            // Update nav links
+            document.querySelectorAll('.nav-links a').forEach(link => {
+                link.classList.remove('active');
+                if (link.dataset.view === viewName) {
+                    link.classList.add('active');
+                }
+            });
+
+            // Update views
+            document.querySelectorAll('.view').forEach(view => {
+                view.classList.remove('active');
+            });
+            document.getElementById(`view-${viewName}`).classList.add('active');
+
+            // Update greeting for home view
+            if (viewName === 'home') {
+                updateGreeting();
+            }
+        }
+
+        // Walk Session Functions
+        function openWalkModal() {
+            document.getElementById('walk-modal').classList.add('active');
+            resetWalkSession();
+        }
+
+        function closeWalkModal() {
+            if (isWalking) {
+                if (confirm('Are you sure you want to end this walk session?')) {
+                    finishWalk();
+                }
+            } else {
+                document.getElementById('walk-modal').classList.remove('active');
+            }
+        }
+
+        function resetWalkSession() {
+            walkSeconds = 0;
+            walkDistance = 0;
+            walkCalories = 0;
+            isWalking = false;
+            isPaused = false;
+            updateWalkDisplay();
+            document.getElementById('start-btn').style.display = 'inline-flex';
+            document.getElementById('pause-btn').style.display = 'none';
+            document.getElementById('finish-btn').style.display = 'none';
+        }
+
+        function startWalk() {
+            isWalking = true;
+            isPaused = false;
+            document.getElementById('start-btn').style.display = 'none';
+            document.getElementById('pause-btn').style.display = 'inline-flex';
+            document.getElementById('finish-btn').style.display = 'inline-flex';
+            
+            walkInterval = setInterval(() => {
+                walkSeconds++;
+                // Simulate distance and calories (approx 5km/h = 1.4m/s)
+                walkDistance += 0.0014; // km per second
+                walkCalories += 0.1; // approx calories per second
+                updateWalkDisplay();
+            }, 1000);
+
+            showToast('Walk session started! 🚶', 'success');
+        }
+
+        function pauseWalk() {
+            if (isPaused) {
+                // Resume
+                isPaused = false;
+                document.getElementById('pause-btn').innerHTML = '⏸ Pause';
+                walkInterval = setInterval(() => {
+                    walkSeconds++;
+                    walkDistance += 0.0014;
+                    walkCalories += 0.1;
+                    updateWalkDisplay();
+                }, 1000);
+                showToast('Walk resumed!', 'success');
+            } else {
+                // Pause
+                isPaused = true;
+                clearInterval(walkInterval);
+                document.getElementById('pause-btn').innerHTML = '▶ Resume';
+                showToast('Walk paused', 'success');
+            }
+        }
+
+        function finishWalk() {
+            clearInterval(walkInterval);
+            isWalking = false;
+            
+            const duration = formatTime(walkSeconds);
+            const distance = walkDistance.toFixed(2);
+            const calories = Math.round(walkCalories);
+            
+            closeWalkModal();
+            showToast(`Great walk! ${distance}km in ${duration} - ${calories} calories burned! 🎉`, 'success');
+            
+            // Add to activity feed
+            activities.unshift({
+                id: Date.now(),
+                user: "You",
+                avatar: "JD",
+                time: "Just now",
+                distance: parseFloat(distance),
+                duration: duration,
+                pace: formatPace(walkSeconds, walkDistance),
+                likes: 0,
+                comments: 0,
+                liked: false
+            });
+            renderActivities();
+        }
+
+        function updateWalkDisplay() {
+            document.getElementById('walk-timer').textContent = formatTime(walkSeconds);
+            document.getElementById('walk-distance').textContent = walkDistance.toFixed(1);
+            document.getElementById('walk-calories').textContent = Math.round(walkCalories);
+        }
+
+        function formatTime(seconds) {
+            const hrs = Math.floor(seconds / 3600);
+            const mins = Math.floor((seconds % 3600) / 60);
+            const secs = seconds % 60;
+            return `${hrs.toString().padStart(2, '0')}:${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
+        }
+
+        function formatPace(seconds, distance) {
+            if (distance === 0) return "0:00";
+            const paceSeconds = seconds / distance;
+            const paceMins = Math.floor(paceSeconds / 60);
+            const paceSecs = Math.floor(paceSeconds % 60);
+            return `${paceMins}:${paceSecs.toString().padStart(2, '0')}`;
+        }
+
+        // Buddy Functions
+        function connectBuddy(id) {
+            const buddy = buddies.find(b => b.id === id);
+            if (buddy) {
+                buddy.connected = true;
+                renderBuddies();
+                showToast(`Connected with ${buddy.name}!`, 'success');
+            }
+        }
+
+        function inviteToWalk(name) {
+            showToast(`Invitation sent to ${name}!`, 'success');
+        }
+
+        // Challenge Functions
+        function joinChallenge(id) {
+            const challenge = challenges.find(c => c.id === id);
+            if (challenge) {
+                challenge.joined = true;
+                challenge.participants++;
+                renderChallenges();
+                showToast(`Joined "${challenge.title}" challenge! Let's go! 🏆`, 'success');
+            }
+        }
+
+        // Activity Functions
+        function likeActivity(id) {
+            const activity = activities.find(a => a.id === id);
+            if (activity) {
+                activity.liked = !activity.liked;
+                activity.likes += activity.liked ? 1 : -1;
+                renderActivities();
+            }
+        }
+
+        // Toast Notifications
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = `toast ${type}`;
+            toast.innerHTML = `
+                <span>${type === 'success' ? '✓' : '!'}</span>
+                <span>${message}</span>
+            `;
+            container.appendChild(toast);
+
+            setTimeout(() => {
+                toast.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Filter Tabs
+        document.querySelectorAll('.filter-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+    </script>
+</body>
+</html>
